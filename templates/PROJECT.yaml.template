@@ -1,0 +1,61 @@
+# 项目配置模板
+# 由 workspace-governance skill 自动生成
+
+projects:
+  {{PROJECT_NAME}}:
+    # 项目基本信息
+    description: {{DESCRIPTION}}
+    created: {{CREATED_DATE}}
+    updated: {{UPDATED_DATE}}
+
+    # 路径配置
+    paths:
+      source: ~/workspace/projects/{{PROJECT_NAME}}
+      templates: ~/.openclaw/skills/workspace-governance/templates
+
+    # Git 配置
+    git:
+      remote: {{GIT_REMOTE}}
+      branch: {{GIT_BRANCH}}
+
+    # 部署配置
+    deployment:
+      prod:
+        url: {{PROD_URL}}
+        status: {{PROD_STATUS}}
+      staging:
+        url: {{STAGING_URL}}
+        status: {{STAGING_STATUS}}
+
+    # 技术栈
+    tech:
+      frontend:
+        {{#each TECH_FRONTEND}}
+        - {{this}}
+        {{/each}}
+      backend:
+        {{#each TECH_BACKEND}}
+        - {{this}}
+        {{/each}}
+      database:
+        {{#each TECH_DATABASE}}
+        - {{this}}
+        {{/each}}
+
+    # AI 工具配置
+    ai:
+      primary: {{AI_PRIMARY}}
+      secondary:
+        {{#each AI_SECONDARY}}
+        - {{this}}
+        {{/each}}
+
+    # 代码风格
+    style:
+      code: {{CODE_STYLE}}
+      ui: {{UI_FRAMEWORK}}
+      naming: {{NAMING_CONVENTION}}
+
+    # 项目状态
+    status: {{PROJECT_STATUS}}
+    archived: false

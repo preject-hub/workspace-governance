@@ -1,0 +1,202 @@
+# {{PROJECT_NAME}}
+
+> {{DESCRIPTION}}
+
+## 技术栈
+
+### 前端
+{{#each TECH_FRONTEND}}
+- {{this}}
+{{/each}}
+
+### 后端
+{{#each TECH_BACKEND}}
+- {{this}}
+{{/each}}
+
+### 数据库
+{{#each TECH_DATABASE}}
+- {{this}}
+{{/each}}
+
+## 代码风格
+
+- **编码规范**：{{CODE_STYLE}}
+- **命名规范**：{{NAMING_STYLE}}
+- **UI 框架**：{{UI_FRAMEWORK}}
+
+## 命名规范
+
+### 变量命名
+- 普通变量：`camelCase`
+- 常量：`UPPER_SNAKE_CASE`
+- 布尔值：以 `is`、`has`、`can` 开头
+
+### 函数命名
+- 普通函数：`camelCase`
+- 事件处理：`handle` + 事件名
+- 获取数据：`get` + 数据名
+- 设置数据：`set` + 数据名
+
+### 组件命名
+- React 组件：`PascalCase`
+- 页面组件：`PascalCase` + `Page` 后缀
+- 工具组件：`PascalCase` + 功能描述
+
+### 文件命名
+- 组件文件：`PascalCase.tsx`
+- 工具文件：`camelCase.ts`
+- 样式文件：`camelCase.module.less`
+- 类型文件：`PascalCase.types.ts`
+
+## Hook 规范
+
+### 自定义 Hook
+```typescript
+// 以 use 开头
+useUserProfile()
+useAuth()
+useLocalStorage()
+```
+
+### 生命周期 Hook
+```typescript
+// 组件挂载后执行
+useEffect(() => {
+  // 初始化逻辑
+}, [])
+
+// 依赖变化时执行
+useEffect(() => {
+  // 副作用逻辑
+}, [dependency])
+```
+
+## API 规范
+
+### RESTful API
+- GET：获取资源
+- POST：创建资源
+- PUT：更新资源（全量）
+- PATCH：更新资源（部分）
+- DELETE：删除资源
+
+### 响应格式
+```typescript
+interface ApiResponse<T> {
+  code: number;      // 状态码
+  message: string;   // 提示信息
+  data: T;          // 响应数据
+}
+```
+
+### 错误处理
+```typescript
+// 统一错误处理
+catch (error) {
+  if (error.code === 401) {
+    // 跳转登录
+  } else if (error.code === 403) {
+    // 权限不足
+  } else {
+    // 其他错误
+  }
+}
+```
+
+## Git Commit 规范
+
+### Commit Message 格式
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+### Type 类型
+- `feat`：新功能
+- `fix`：修复 Bug
+- `docs`：文档更新
+- `style`：代码格式（不影响功能）
+- `refactor`：重构
+- `perf`：性能优化
+- `test`：测试相关
+- `chore`：构建/工具相关
+
+### 示例
+```
+feat(auth): 添加微信登录功能
+
+- 集成微信 OAuth2.0
+- 添加微信用户信息获取
+- 处理登录回调
+
+Closes #123
+```
+
+## Agent 职责
+
+### 代码生成
+- 根据需求生成符合规范的代码
+- 遵循项目的技术栈和代码风格
+- 生成完整的类型定义
+
+### 代码审查
+- 检查代码规范遵守情况
+- 发现潜在的 Bug 和安全问题
+- 提供优化建议
+
+### 文档维护
+- 更新 README 和 API 文档
+- 维护 CHANGELOG
+- 生成组件文档
+
+### 测试支持
+- 生成单元测试
+- 编写集成测试
+- 维护测试覆盖率
+
+## 部署信息
+
+### 生产环境
+- **URL**：{{PROD_URL}}
+- **状态**：{{PROD_STATUS}}
+
+### 测试环境
+- **URL**：{{STAGING_URL}}
+- **状态**：{{STAGING_STATUS}}
+
+## 开发指南
+
+### 本地开发
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
+```
+
+### 代码提交
+```bash
+# 添加文件
+git add .
+
+# 提交（遵循 commit 规范）
+git commit -m "feat(xxx): 添加 xxx 功能"
+
+# 推送
+git push origin main
+```
+
+### 分支管理
+- `main`：主分支，稳定版本
+- `develop`：开发分支
+- `feature/*`：功能分支
+- `fix/*`：修复分支
+- `release/*`：发布分支

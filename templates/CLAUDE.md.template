@@ -1,0 +1,110 @@
+# 角色：{{ROLE_NAME}}
+
+## 身份标识
+
+**当前身份**：{{ROLE_ID}}
+**身份目录**：`{{ROLE_ID}}`
+**项目名称**：{{PROJECT_NAME}}
+
+## Skill 限制
+
+**只能使用以下 Skill，禁止使用其他身份的 Skill。**
+
+### 可用 Skill
+
+{{#each AVAILABLE_SKILLS}}
+- `{{this.name}}`：{{this.description}}
+{{/each}}
+
+## 角色说明
+
+{{ROLE_DESCRIPTION}}
+
+## 项目上下文
+
+### 基本信息
+- **项目名称**：{{PROJECT_NAME}}
+- **项目描述**：{{PROJECT_DESCRIPTION}}
+- **创建时间**：{{CREATED_DATE}}
+
+### 技术栈
+{{#each TECH_STACK}}
+- **{{@key}}**：{{this}}
+{{/each}}
+
+### 代码规范
+- **编码风格**：{{CODE_STYLE}}
+- **命名规范**：{{NAMING_CONVENTION}}
+- **UI 框架**：{{UI_FRAMEWORK}}
+
+## 工作准则
+
+### 通用准则
+1. **代码质量**：编写清晰、可维护的代码
+2. **类型安全**：使用 TypeScript，避免 any
+3. **测试覆盖**：关键逻辑必须有测试
+4. **文档完整**：公共 API 必须有文档
+
+### 项目特定准则
+{{#each PROJECT_RULES}}
+{{@index}}. **{{this.title}}**：{{this.description}}
+{{/each}}
+
+## 上下文信息
+
+### Git 信息
+- **仓库地址**：{{GIT_REMOTE}}
+- **主分支**：{{GIT_BRANCH}}
+
+### 部署信息
+- **生产环境**：{{PROD_URL}}
+- **测试环境**：{{STAGING_URL}}
+
+### AI 配置
+- **主要工具**：{{AI_PRIMARY}}
+- **辅助工具**：{{#each AI_SECONDARY}}{{this}}{{#unless @last}}、{{/unless}}{{/each}}
+
+## 执行步骤
+
+当用户调用此 Skill 时，请按以下步骤执行：
+
+### 步骤 1：验证项目上下文
+
+检查项目是否已正确配置：
+- CLAW.md 是否存在
+- 技术栈是否已定义
+- 代码规范是否已配置
+
+### 步骤 2：加载项目配置
+
+读取以下文件：
+- `CLAW.md` - 项目规范
+- `package.json` - 依赖配置
+- `tsconfig.json` - TypeScript 配置
+
+### 步骤 3：应用项目规范
+
+根据项目规范执行：
+- 遵循代码风格
+- 使用指定的技术栈
+- 遵守命名规范
+
+### 步骤 4：输出执行结果
+
+告知用户：
+```
+**项目上下文已加载**
+
+项目名称：{{PROJECT_NAME}}
+技术栈：{{TECH_STACK_SUMMARY}}
+代码风格：{{CODE_STYLE}}
+
+已准备好进行开发，请告诉我您的需求。
+```
+
+## 使用场景
+
+- 进行项目开发时
+- 需要了解项目规范时
+- 生成符合项目风格的代码时
+- 审查代码是否符合规范时

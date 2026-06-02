@@ -1,0 +1,169 @@
+# OpenClaw 项目注册表
+# 由 workspace-governance skill 管理
+
+projects:
+  # ========== 工具 ==========
+  project-hub:
+    description: macOS 原生项目管理工具，可视化管理所有项目
+    created: 2026-06-02
+    updated: 2026-06-02
+    status: active
+    group: null
+    role: tool
+    paths:
+      source: ~/.openclaw/workspace/project-hub
+    git:
+      remote: ""
+    tech:
+      desktop:
+        - swift
+        - swiftui
+        - macos-native
+  hdc-manager:
+    description: macOS 原生 HDC（HarmonyOS Device Connector）管理工具
+    created: 2026-05-27
+    updated: 2026-06-02
+    status: active
+    group: null
+    role: tool
+    paths:
+      source: ~/.openclaw/workspace/hdc-manager
+    git:
+      remote: https://github.com/mapmiao/hdc-manager.git
+    tech:
+      desktop:
+        - swift
+        - macos-native
+
+  # ========== 家族管理系统 ==========
+  family-tree:
+    description: 家族管理系统（前后端）
+    created: 2026-05-27
+    updated: 2026-06-02
+    status: active
+    group: family-tree
+    role: fullstack
+    paths:
+      source: ~/.openclaw/workspace/family-tree
+    git:
+      remote: https://github.com/mapmiao/family-tree.git
+    deployment:
+      backend:
+        host: 122.51.155.231
+        port: 19501
+        service: family-tree
+    tech:
+      frontend:
+        - react
+        - vite
+      mobile:
+        - tauri-v2
+        - kotlin
+      backend:
+        - node
+        - express
+      database:
+        - sqlite
+
+  # ========== 游戏活动管理系统 ==========
+  game-activities-admin-backend:
+    description: 游戏活动管理系统 - 后台 API（管理端，需鉴权）
+    created: 2026-05-27
+    updated: 2026-06-02
+    status: active
+    group: game-activities
+    role: backend-admin
+    paths:
+      source: ~/.openclaw/workspace/game-activities-admin-backend
+    git:
+      remote: https://github.com/gameActivities/game-activities-admin-backend.git
+    deployment:
+      host: 122.51.155.231
+      port: 19500
+      service: game-activities-admin
+    tech:
+      backend:
+        - java
+        - spring-boot-3.4.5
+        - jpa
+        - mysql
+        - jwt
+
+  game-activities-app-backend:
+    description: 游戏活动管理系统 - App 端 API（公开访问）
+    created: 2026-05-28
+    updated: 2026-06-02
+    status: active
+    group: game-activities
+    role: backend-app
+    paths:
+      source: ~/.openclaw/workspace/game-activities-app-backend
+    git:
+      remote: https://github.com/gameActivities/game-activities-app-backend.git
+    deployment:
+      host: 122.51.155.231
+      port: 19502
+      service: game-activities-app
+    tech:
+      backend:
+        - java
+        - spring-boot-3.4.5
+        - jpa
+        - mysql
+
+  game-activities-admin:
+    description: 游戏活动管理系统 - 管理后台前端（React + Ant Design）
+    created: 2026-05-28
+    updated: 2026-06-02
+    status: active
+    group: game-activities
+    role: frontend-admin
+    paths:
+      source: ~/.openclaw/workspace/game-activities-admin
+    git:
+      remote: https://github.com/gameActivities/game-activities-admin.git
+    deployment:
+      host: 182.92.179.63
+      port: 8000
+      server: nginx
+    tech:
+      frontend:
+        - react
+        - ant-design
+        - vite
+        - typescript
+
+  game-activities-android:
+    description: 游戏活动管理系统 - Android App（Kotlin + Jetpack Compose）
+    created: 2026-05-28
+    updated: 2026-06-02
+    status: active
+    group: game-activities
+    role: mobile-android
+    paths:
+      source: ~/.openclaw/workspace/game-activities-android
+    git:
+      remote: https://github.com/gameActivities/game-activities-android.git
+    tech:
+      mobile:
+        - kotlin
+        - jetpack-compose
+        - okhttp
+        - gson
+
+  game-activities-harmony:
+    description: 游戏活动管理系统 - 鸿蒙 App（ArkTS + ArkUI，API 22）
+    created: 2026-05-28
+    updated: 2026-06-02
+    status: active
+    group: game-activities
+    role: mobile-harmony
+    paths:
+      source: /Volumes/WorkDisk_Pro/mapmiao/gameActivitiesHarmony
+    git:
+      remote: https://github.com/mapmiao/game-activities-harmony.git
+    tech:
+      mobile:
+        - arkts
+        - harmonyos-api22
+        - arkui
