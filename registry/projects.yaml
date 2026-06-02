@@ -8,12 +8,12 @@ projects:
     created: 2026-06-02
     updated: 2026-06-02
     status: active
-    group: null
+    group: project-hub
     role: tool
     paths:
       source: ~/.openclaw/workspace/project-hub
     git:
-      remote: ""
+      remote: https://github.com/preject-hub/project-hub-macos.git
     tech:
       desktop:
         - swift
