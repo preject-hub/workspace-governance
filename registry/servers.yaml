@@ -5,3 +5,10 @@
   password: "Map226411"
   port: 22
   authMethod: "password"
+- name: "腾讯云"
+  host: "122.51.155.231"
+  user: "root"
+  keyPath: "~/.ssh/id_rsa"
+  password: "Map226411"
+  port: 22
+  authMethod: "password"
