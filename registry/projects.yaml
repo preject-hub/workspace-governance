@@ -262,3 +262,44 @@ projects:
         - arkts
         - harmonyos-api22
         - arkui
+
+  # ========== 世界模拟 ==========
+  world-sim:
+    description: 生物进化世界模拟器 - C++ 模拟引擎 + TypeScript 可视化
+    created: 2026-06-22
+    updated: 2026-06-22
+    status: active
+    group: world-sim
+    role: simulation
+    paths:
+      source: ~/Projects/world-sim
+    git:
+      remote: null
+    tech:
+      backend:
+        - cpp17
+        - cmake
+        - sqlite3
+      frontend:
+        - typescript
+        - vite
+        - canvas
+      infrastructure:
+        - node.js
+        - websocket
+    capabilities:
+      - environment    # 太阳、海洋、水流系统
+      - biology        # 基因、单细胞生物
+      - evolution      # 进化引擎、变异压力
+      - virus          # 病毒系统（种群调控）
+      - visualization  # 实时 Canvas 可视化
+      - persistence    # SQLite 数据持久化
+    notes: |
+      苗构思的世界模拟 + 生物进化项目。
+      连续 2D 空间，单细胞生物通过光合作用获取能量。
+      种群危机触发进化，能量爆发触发病毒。
+      运行：
+        构建：cd ~/Projects/world-sim && mkdir -p build && cd build && cmake .. && make
+        实时模式：./build/world-sim --config world.conf --realtime 1000 --fps 10
+        批量模式：./build/world-sim --config world.conf --headless 500
+        可视化：node server.js（WebSocket + HTTP）+ cd frontend && npx vite
