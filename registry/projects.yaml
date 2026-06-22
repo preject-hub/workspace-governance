@@ -278,10 +278,12 @@ projects:
     deployment:
       backend:
         host: 122.51.155.231
+        port: 9090
         service: world-sim
         notes: 腾讯云 - C++ 模拟引擎 + Node.js WebSocket 服务器
       frontend:
         host: 182.92.179.63
+        port: 8080
         server: nginx
         notes: 阿里云 - Vite 静态文件 + Nginx
     tech:
