@@ -263,6 +263,23 @@ projects:
         - harmonyos-api22
         - arkui
 
+  # ========== 工具 ==========
+  openclaw-monitor:
+    description: macOS WidgetKit 小组件 - 监控 OpenClaw Gateway 进程状态
+    created: 2026-06-23
+    updated: 2026-06-23
+    status: active
+    group: openclaw-monitor
+    role: tool
+    paths:
+      source: ~/Projects/openclaw-monitor
+    tech:
+      desktop:
+        - swift
+        - swiftui
+        - widgetkit
+        - macos-native
+
   # ========== 世界模拟 ==========
   world-sim:
     description: 生物进化世界模拟器 - C++ 模拟引擎 + TypeScript 可视化
