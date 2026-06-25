@@ -331,3 +331,93 @@ projects:
         实时模式：./build/world-sim --config world.conf --realtime 1000 --fps 10
         批量模式：./build/world-sim --config world.conf --headless 500
         可视化：node server.js（WebSocket + HTTP）+ cd frontend && npx vite
+
+  # ========== 远程监控系统 ==========
+  remote-monitor-agent:
+    description: 远程监控系统 - Mac 端数据采集 Agent（Python + psutil + WebSocket）
+    created: 2026-06-24
+    updated: 2026-06-24
+    status: active
+    group: remote-monitor
+    role: agent
+    paths:
+      source: ~/Projects/remote-monitor/agent
+    git:
+      remote: null
+    tech:
+      backend:
+        - python3
+        - psutil
+        - websockets
+    capabilities:
+      - cpu-monitor
+      - memory-monitor
+      - disk-monitor
+      - network-monitor
+      - process-list
+      - shell-exec
+      - file-browse
+    notes: |
+      采集 CPU/内存/磁盘/网络/进程数据，通过 WebSocket 上报到服务器。
+      支持远程命令执行（白名单机制）。
+      运行：cd ~/Projects/remote-monitor/agent && python3 agent.py
+
+  remote-monitor-server:
+    description: 远程监控系统 - 中转服务器（Node.js + Express + WebSocket + SQLite）
+    created: 2026-06-24
+    updated: 2026-06-24
+    status: active
+    group: remote-monitor
+    role: server
+    paths:
+      source: ~/Projects/remote-monitor/server
+    git:
+      remote: null
+    deployment:
+      host: 122.51.155.231
+      port: 9100
+      ws_port: 9101
+      service: remote-monitor-server
+    tech:
+      backend:
+        - node.js
+        - express
+        - ws
+        - sqlite3
+        - jwt
+    capabilities:
+      - websocket-relay
+      - rest-api
+      - data-storage
+      - command-forward
+      - auth
+    notes: |
+      接收 Agent 数据，提供 API 给 App，转发远程命令。
+      运行：cd ~/Projects/remote-monitor/server && node src/index.js
+
+  remote-monitor-app:
+    description: 远程监控系统 - 鸿蒙 App（ArkTS + ArkUI，实时监控 + 远程控制）
+    created: 2026-06-24
+    updated: 2026-06-24
+    status: active
+    group: remote-monitor
+    role: app
+    paths:
+      source: ~/Projects/remote-monitor/app
+    git:
+      remote: null
+    tech:
+      mobile:
+        - arkts
+        - arkui
+        - harmonyos-next
+    capabilities:
+      - dashboard
+      - process-list
+      - terminal
+      - file-browser
+      - alert-config
+    notes: |
+      鸿蒙原生 App，通过 WebSocket 连接服务器查看电脑状态。
+      支持仪表盘、进程管理、远程终端、文件浏览。
+      构建：cd ~/Projects/remote-monitor/app && hdc build
