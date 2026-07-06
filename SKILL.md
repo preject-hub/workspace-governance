@@ -1,7 +1,7 @@
 ---
 name: workspace-governance
 description: AI Workspace Governance - 管理 AI 生成项目的生命周期，包括项目元数据、Git、部署、技术栈和代码风格
-version: 1.1.0
+version: 1.2.0
 author: openclaw
 tags:
   - workspace
@@ -35,10 +35,13 @@ tags:
 
 # 示例
 create-project harmony-chat --description "HarmonyOS IM 项目" --tech react,vite
+
+# 创建带 group 的子项目
+create-project game-activities-harmony --group game-activities --role mobile-harmony --tech arkts
 ```
 
 自动执行：
-- 创建项目目录结构
+- 创建项目目录结构（有 group 时放到 `projects/<group>/` 下）
 - 初始化 Git 仓库
 - 生成 README.md、CLAW.md、CLAUDE.md
 - 注册到 projects.yaml
@@ -50,17 +53,41 @@ create-project harmony-chat --description "HarmonyOS IM 项目" --tech react,vit
 首次使用时执行：
 
 ```bash
+# 使用默认路径 ~/workspace
 ~/.openclaw/skills/workspace-governance/scripts/init-workspace.sh
+
+# 自定义路径
+WORKSPACE_ROOT=~/my-workspace ~/.openclaw/skills/workspace-governance/scripts/init-workspace.sh
 ```
 
 创建结构：
 ```
-~/workspace/
-├── projects/      # 项目源码
-├── registry/      # 项目注册表
-├── templates/     # 模板文件
-└── .ai/           # AI 相关配置
+~/workspace/                           ← workspace 根目录（可配置）
+├── projects/                          ← 所有项目在这里
+│   ├── game-activities/              ← 主项目文件夹（group）
+│   │   ├── admin-backend/            ← 子项目
+│   │   ├── app-backend/
+│   │   ├── admin-frontend/
+│   │   ├── android/
+│   │   ├── scraper/
+│   │   └── harmony/
+│   ├── family-tree/                  ← 独立项目（无 group 子目录）
+│   ├── project-hub/
+│   └── ...
+├── registry/                          ← 注册表统一放这里
+│   ├── projects.yaml
+│   └── servers.yaml
+├── templates/                         ← 模板文件
+└── .ai/                               ← AI 配置
 ```
+
+### workspace 路径配置
+
+- 默认路径：`~/workspace`
+- 通过环境变量 `WORKSPACE_ROOT` 自定义
+- ProjectHub 应用中可通过「设置 → Workspace 路径」配置
+- 已有项目的 `paths.source` 记录绝对路径，不受 workspace 路径变更影响
+- 变更 workspace 路径只影响后续新建项目
 
 ### 3. 项目上下文加载
 
@@ -79,6 +106,12 @@ create-project harmony-chat --description "HarmonyOS IM 项目" --tech react,vit
 
 ## Registry 管理规则
 
+### 注册表位置
+
+注册表统一存放在 `WORKSPACE_ROOT/registry/` 目录下：
+- `projects.yaml` — 项目注册表
+- `servers.yaml` — 服务器配置
+
 ### projects.yaml 结构
 
 ```yaml
@@ -94,7 +127,7 @@ projects:
     role: <role>                # 子项目角色（见下方角色列表）
 
     paths:
-      source: ~/workspace/projects/<project-name>
+      source: ~/workspace/projects/[<group>/]<project-name>
 
     git:
       remote: git@github.com:<org>/<repo>.git
@@ -270,6 +303,8 @@ archive-project my-app
 
 ## 目录结构
 
+### Skill 安装目录
+
 ```
 ~/.openclaw/skills/workspace-governance/
 ├── SKILL.md                    # 本文件
@@ -277,10 +312,22 @@ archive-project my-app
 │   ├── CLAW.md.template       # CLAW.md 模板
 │   ├── CLAUDE.md.template     # CLAUDE.md 模板
 │   └── PROJECT.yaml.template  # 项目配置模板
-├── scripts/
-│   ├── init-workspace.sh      # 初始化工作区
-│   ├── create-project.sh      # 创建项目
-│   └── load-project-context.sh # 加载项目上下文
-└── registry/
-    └── projects.yaml          # 项目注册表
+└── scripts/
+    ├── init-workspace.sh      # 初始化工作区
+    ├── create-project.sh      # 创建项目
+    └── load-project-context.sh # 加载项目上下文
+```
+
+### Workspace 目录
+
+```
+~/workspace/
+├── projects/              # 项目源码（group 项目按组归类）
+│   └── <group>/
+│       └── <project>/
+├── registry/              # 注册表
+│   ├── projects.yaml
+│   └── servers.yaml
+├── templates/             # 模板（符号链接到 skill 目录）
+└── .ai/                   # AI 配置
 ```

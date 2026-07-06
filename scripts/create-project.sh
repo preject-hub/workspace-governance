@@ -12,8 +12,8 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# 配置
-WORKSPACE_ROOT="$HOME/workspace"
+# 配置（可通过环境变量 WORKSPACE_ROOT 自定义）
+WORKSPACE_ROOT="${WORKSPACE_ROOT:-$HOME/workspace}"
 SKILL_ROOT="$HOME/.openclaw/skills/workspace-governance"
 REGISTRY_FILE="$WORKSPACE_ROOT/registry/projects.yaml"
 
@@ -44,6 +44,8 @@ show_help() {
   --tech, -t          技术栈（逗号分隔）
   --style, -s         代码风格（airbnb/standard/prettier）
   --git, -g           Git 远程仓库地址
+  --group, -G         项目组名称（如 game-activities）
+  --role, -r          项目角色（如 frontend-admin, backend-app）
   --ui, -u            UI 框架（semi-design/antd/element）
   --help, -h          显示帮助信息
 
@@ -51,6 +53,7 @@ show_help() {
   create-project my-app
   create-project my-app --description "我的应用" --tech react,vite,node
   create-project my-app -d "我的应用" -t react,vite -s airbnb -u semi-design
+  create-project game-activities-harmony --group game-activities --role mobile-harmony
 EOF
 }
 
@@ -61,6 +64,8 @@ parse_args() {
     TECH_STACK=""
     CODE_STYLE="airbnb"
     GIT_REMOTE=""
+    GROUP=""
+    ROLE=""
     UI_FRAMEWORK="semi-design"
 
     while [[ $# -gt 0 ]]; do
@@ -79,6 +84,14 @@ parse_args() {
                 ;;
             --git|-g)
                 GIT_REMOTE="$2"
+                shift 2
+                ;;
+            --group|-G)
+                GROUP="$2"
+                shift 2
+                ;;
+            --role|-r)
+                ROLE="$2"
                 shift 2
                 ;;
             --ui|-u)
@@ -133,7 +146,12 @@ parse_args() {
 
 # 检查项目是否已存在
 check_project_exists() {
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     if [ -d "$project_dir" ]; then
         log_error "项目已存在: $project_dir"
@@ -151,7 +169,13 @@ check_project_exists() {
 create_project_directory() {
     log_step "创建项目目录..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    # 确定项目目录：有 group 时放到 group 子目录下
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
     mkdir -p "$project_dir"
 
     # 创建子目录
@@ -168,7 +192,13 @@ create_project_directory() {
 init_git() {
     log_step "初始化 Git 仓库..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    # 确定项目目录
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     cd "$project_dir"
     git init
@@ -229,7 +259,12 @@ EOF
 create_readme() {
     log_step "创建 README.md..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     cat > "$project_dir/README.md" << EOF
 # $PROJECT_NAME
@@ -287,7 +322,12 @@ EOF
 create_claw_md() {
     log_step "创建 CLAW.md..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
     local template_file="$SKILL_ROOT/templates/CLAW.md.template"
 
     # 解析技术栈
@@ -460,7 +500,12 @@ EOF
 create_claude_md() {
     log_step "创建 CLAUDE.md..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     cat > "$project_dir/CLAUDE.md" << EOF
 # 角色：二开前端工程师
@@ -555,15 +600,26 @@ EOF
         esac
     done
 
+    # 确定路径
+    local source_path
+    if [ -n "$GROUP" ]; then
+        source_path="~/workspace/projects/$GROUP/$PROJECT_NAME"
+    else
+        source_path="~/workspace/projects/$PROJECT_NAME"
+    fi
+
     # 添加项目配置
     cat >> "$REGISTRY_FILE" << EOF
   $PROJECT_NAME:
     description: $DESCRIPTION
     created: $(date +%Y-%m-%d)
     updated: $(date +%Y-%m-%d)
+    status: active
+    group: ${GROUP:-null}
+    role: ${ROLE:-tool}
 
     paths:
-      source: ~/workspace/projects/$PROJECT_NAME
+      source: $source_path
       templates: ~/.openclaw/skills/workspace-governance/templates
 
     git:
@@ -603,7 +659,12 @@ EOF
 create_editorconfig() {
     log_step "创建 .editorconfig..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     cat > "$project_dir/.editorconfig" << 'EOF'
 # EditorConfig helps maintain consistent coding styles
@@ -651,7 +712,12 @@ EOF
 create_prettierrc() {
     log_step "创建 .prettierrc..."
 
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     cat > "$project_dir/.prettierrc" << 'EOF'
 {
@@ -684,7 +750,12 @@ EOF
 
 # 显示创建结果
 show_result() {
-    local project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    local project_dir
+    if [ -n "$GROUP" ]; then
+        project_dir="$WORKSPACE_ROOT/projects/$GROUP/$PROJECT_NAME"
+    else
+        project_dir="$WORKSPACE_ROOT/projects/$PROJECT_NAME"
+    fi
 
     echo ""
     echo "=========================================="

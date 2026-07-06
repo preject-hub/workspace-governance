@@ -11,8 +11,8 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# 工作区根目录
-WORKSPACE_ROOT="$HOME/workspace"
+# 工作区根目录（可通过环境变量 WORKSPACE_ROOT 自定义）
+WORKSPACE_ROOT="${WORKSPACE_ROOT:-$HOME/workspace}"
 
 # 日志函数
 log_info() {

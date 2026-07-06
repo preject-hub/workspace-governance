@@ -11,8 +11,8 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# 配置
-WORKSPACE_ROOT="$HOME/workspace"
+# 配置（可通过环境变量 WORKSPACE_ROOT 自定义）
+WORKSPACE_ROOT="${WORKSPACE_ROOT:-$HOME/workspace}"
 REGISTRY_FILE="$WORKSPACE_ROOT/registry/projects.yaml"
 
 # 日志函数

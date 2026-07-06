@@ -32,7 +32,7 @@ tools:
     updated: 2026-06-08
     status: active
     location: ~/bin/agent
-    source: ~/.openclaw/workspace/projects/ts-agent-demo
+    source: ~/.openclaw/workspace/ts-agent-demo
     type: cli
     capabilities:
       - chat        # 自然语言对话
@@ -56,7 +56,7 @@ projects:
     group: project-hub
     role: tool
     paths:
-      source: ~/.openclaw/workspace/projects/project-hub
+      source: ~/.openclaw/workspace/project-hub
     git:
       remote: https://github.com/preject-hub/project-hub-macos.git
     tech:
@@ -72,7 +72,7 @@ projects:
     group: null
     role: tool
     paths:
-      source: ~/.openclaw/workspace/projects/hdc-manager
+      source: ~/.openclaw/workspace/hdc-manager
     git:
       remote: https://github.com/mapmiao/hdc-manager.git
     tech:
@@ -164,7 +164,7 @@ projects:
     group: game-activities
     role: frontend-admin
     paths:
-      source: ~/.openclaw/workspace/projects/game-activities-admin
+      source: ~/.openclaw/workspace/game-activities-admin
     git:
       remote: https://github.com/gameActivities/game-activities-admin.git
     deployment:
@@ -186,7 +186,7 @@ projects:
     group: game-activities
     role: mobile-android
     paths:
-      source: ~/.openclaw/workspace/projects/game-activities-android
+      source: ~/.openclaw/workspace/game-activities-android
     git:
       remote: https://github.com/gameActivities/game-activities-android.git
     tech:
@@ -205,7 +205,7 @@ projects:
     group: null
     role: tool
     paths:
-      source: ~/.openclaw/workspace/projects/auth-service
+      source: ~/.openclaw/workspace/auth-service
     git:
       remote: null
     deployment:
@@ -230,7 +230,7 @@ projects:
     group: game-activities
     role: backend-scraper
     paths:
-      source: ~/.openclaw/workspace/projects/game-activities-scraper
+      source: ~/.openclaw/workspace/game-activities-scraper
     git:
       remote: null
     deployment:
