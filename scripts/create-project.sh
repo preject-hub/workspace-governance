@@ -647,9 +647,6 @@ $(echo -e "$TECH_YAML")
       code: $CODE_STYLE
       ui: $UI_FRAMEWORK
       naming: camelCase
-
-    status: active
-    archived: false
 EOF
 
     log_info "项目注册完成"

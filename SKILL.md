@@ -318,6 +318,8 @@ archive-project my-app
     └── load-project-context.sh # 加载项目上下文
 ```
 
+> ⚠️ 注册表（registry）已从 skill 目录迁移到 `~/workspace/registry/`，skill 目录下不再保留 registry 副本。
+
 ### Workspace 目录
 
 ```
@@ -325,7 +327,7 @@ archive-project my-app
 ├── projects/              # 项目源码（group 项目按组归类）
 │   └── <group>/
 │       └── <project>/
-├── registry/              # 注册表
+├── registry/              # 注册表（projects.yaml, servers.yaml）
 │   ├── projects.yaml
 │   └── servers.yaml
 ├── templates/             # 模板（符号链接到 skill 目录）
